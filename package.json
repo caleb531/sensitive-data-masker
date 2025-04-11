@@ -1,0 +1,58 @@
+{
+	"name": "secret-masker",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"description": "A Chrome extension to mask sensitive information like dollar amounts, passwords, and credit card numbers.",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && eslint .",
+		"generate-icons": "./utilities/generate-icons.sh"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/caleb531/secret-masker.git"
+	},
+	"author": "Caleb Evans",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/caleb531/secret-masker/issues"
+	},
+	"homepage": "https://github.com/caleb531/secret-masker#readme",
+	"devDependencies": {
+		"@sveltejs/vite-plugin-svelte": "^5.0.3",
+		"@types/chrome": "^0.0.309",
+		"@types/node": "^22.13.10",
+		"eslint": "^9.22.0",
+		"eslint-config-prettier": "^10.1.1",
+		"eslint-plugin-svelte": "^3.1.0",
+		"globals": "^16.0.0",
+		"prettier": "^3.5.3",
+		"prettier-plugin-svelte": "^3.3.3",
+		"svelte": "^5.23.0",
+		"svelte-check": "^4.1.5",
+		"typescript": "^5.8.2",
+		"typescript-eslint": "^8.26.1",
+		"vite": "^6.2.4",
+		"vite-plugin-web-extension": "^4.4.3"
+	},
+	"dependencies": {
+		"es-toolkit": "^1.33.0",
+		"openai": "^4.87.3"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"dtrace-provider",
+			"esbuild",
+			"spawn-sync"
+		],
+		"overrides": {
+			"@babel/runtime@<7.26.10": ">=7.26.10"
+		}
+	}
+}

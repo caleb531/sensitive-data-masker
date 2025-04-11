@@ -1,0 +1,33 @@
+@use 'base';
+@use 'fonts';
+
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+form {
+	width: 100%;
+}
+
+p {
+	margin-bottom: 20px;
+	font-size: 16px;
+}
+
+select,
+input[type='text'],
+input[type='password'] {
+	width: 100%;
+}
+
+.loading-indicator-icon {
+	width: 80px;
+	stroke-width: 20;
+}
+
+.hint {
+	font-style: italic;
+	font-size: var(--font-size-label);
+}

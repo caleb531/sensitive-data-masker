@@ -1,5 +1,5 @@
 {
-	"name": "secret-masker",
+	"name": "sensitive-data-masker",
 	"version": "1.0.0",
 	"private": true,
 	"type": "module",
@@ -16,14 +16,14 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/caleb531/secret-masker.git"
+		"url": "git+https://github.com/caleb531/sensitive-data-masker.git"
 	},
 	"author": "Caleb Evans",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/caleb531/secret-masker/issues"
+		"url": "https://github.com/caleb531/sensitive-data-masker/issues"
 	},
-	"homepage": "https://github.com/caleb531/secret-masker#readme",
+	"homepage": "https://github.com/caleb531/sensitive-data-masker#readme",
 	"devDependencies": {
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
 		"@types/chrome": "^0.0.309",

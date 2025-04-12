@@ -1,7 +1,7 @@
 // Regular expressions representing sensitive data values, like currency values,
 // credit card numbers, etc.
 const sensitiveDataPattern =
-	/(\$|€|£|¥)\s*((?:\d+,?)+(?:\.\d{1,2})?(?:K|M|B|T)?)|((?:\d+,?)+(?:\.\d{1,2})?(?:K|M|B|T)?)\s*(%)/gi;
+	/(\$|€|£|¥)\s*((?:\d+,?)+(?:\.\d{1,2})?(?:K|M|B|T)?)|((?:\d+,?)+(?:\.\d{1,2})(?:K|M|B|T)?)|((?:\d+,?)+(?:\.\d{1,2})?(?:K|M|B|T)?)\s*(%)/gi;
 
 // Recursively walk element and its descendants, and for any leaf node whose
 // textContent matches any of the designated patterns, mask the value
@@ -38,10 +38,12 @@ const observer = new MutationObserver((mutations) => {
 	});
 });
 
-// Check the page for sensitive data when the DOM is first loaded
-document.addEventListener('DOMContentLoaded', () => {
-	maskValuesInNodeTree(document.body);
-});
+// Check the page for sensitive data when the DOM is first loaded (which is
+// guaranteed because the default runAt value for content scripts is
+// "document_idle", which guarantees the DOM is complete by the time the content
+// script runs; for more details, see the table in
+// <https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts#run_time>)
+maskValuesInNodeTree(document.body);
 // Recheck page for sensitive data when DOM changes
 observer.observe(document.body, {
 	childList: true,

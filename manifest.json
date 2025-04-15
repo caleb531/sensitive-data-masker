@@ -6,6 +6,14 @@
 	"icons": {
 		"256": "icons/app-icon.png"
 	},
+	"action": {
+		"default_icon": {
+			"128": "icons/app-icon.png"
+		},
+		"default_title": "Sensitive Data Masker",
+		"default_popup": "options.html"
+	},
+	"options_page": "options.html",
 	"permissions": ["contextMenus", "storage", "activeTab"],
 	"content_scripts": [
 		{

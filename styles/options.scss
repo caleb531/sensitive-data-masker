@@ -1,33 +1,41 @@
 @use 'base';
 @use 'fonts';
 
-main {
+.allowed-website-add {
+	padding: 5px 8px;
+	font-size: var(--font-size-s);
+}
+
+.allowed-website-patterns {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.allowed-website-pattern {
 	display: flex;
-	flex-direction: column;
 	align-items: center;
+	margin: 0;
+	padding: 0;
 }
 
-form {
-	width: 100%;
+.allowed-website-pattern-input[type='text'] {
+	background: none;
+	border: solid 1px var(--color-input-border);
+	padding: 6px 10px;
+	font-size: var(--font-size-s);
+	color: inherit;
+	&:focus {
+		box-shadow: none;
+	}
 }
 
-p {
-	margin-bottom: 20px;
-	font-size: 16px;
-}
-
-select,
-input[type='text'],
-input[type='password'] {
-	width: 100%;
-}
-
-.loading-indicator-icon {
-	width: 80px;
-	stroke-width: 20;
-}
-
-.hint {
-	font-style: italic;
-	font-size: var(--font-size-label);
+.allowed-website-pattern-remove {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	margin-left: 5px;
+	padding: 0;
+	background: none;
 }

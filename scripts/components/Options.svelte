@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DeleteIcon from './DeleteIcon.svelte';
+	import RemoveIcon from './RemoveIcon.svelte';
 
 	let allowedWebsites: string[] = $state([]);
 
@@ -51,9 +51,10 @@
 			<button
 				class="allowed-website-pattern-remove"
 				onclick={() => removeWebsite(index)}
-				aria-label="Remove website"
+				aria-label="Remove website pattern"
+				title="Remove website pattern"
 			>
-				<DeleteIcon />
+				<RemoveIcon />
 			</button>
 		</li>
 	{/each}

@@ -38,24 +38,24 @@ const observer = new MutationObserver((mutations) => {
 	});
 });
 
-// Return true if the given host string is among the list of allowed host
+// Return true if the given website URL matches one of the allowed website
 // patterns; wildcards (e.g. *.example.com) are allowed
-function hostIsAllowed(currentHost: string, allowedWebsites: string[]) {
-	return allowedWebsites.some((host) => {
-		const escapedHost = host
+function websiteIsAllowed(currentUrl: string, allowedWebsites: string[]) {
+	return allowedWebsites.some((websitePattern) => {
+		const escapedWebsitePattern = websitePattern
 			// Escape special regex characters
 			.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 			// Replace wildcards (*) with the proper regex pattern to match any
 			// character except a dot
 			.replace(/\\\*/g, '[^\\.]*');
-		const regex = new RegExp(`^${escapedHost}$`);
-		return regex.test(currentHost);
+		const regex = new RegExp(`\\b${escapedWebsitePattern}\\b`);
+		return regex.test(currentUrl);
 	});
 }
 
 async function main() {
 	const allowedWebsites = (await chrome.storage.sync.get('allowedWebsites'))?.allowedWebsites ?? [];
-	if (!hostIsAllowed(window.location.host, allowedWebsites)) {
+	if (!websiteIsAllowed(window.location.href, allowedWebsites)) {
 		return;
 	}
 	// Check the page for sensitive data when the DOM is first loaded (which is

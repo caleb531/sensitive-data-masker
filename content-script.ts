@@ -40,8 +40,8 @@ const observer = new MutationObserver((mutations) => {
 
 // Return true if the given host string is among the list of allowed host
 // patterns; wildcards (e.g. *.example.com) are allowed
-function hostIsAllowed(currentHost: string, allowedHosts: string[]) {
-	return allowedHosts.some((host) => {
+function hostIsAllowed(currentHost: string, allowedWebsites: string[]) {
+	return allowedWebsites.some((host) => {
 		const escapedHost = host
 			// Escape special regex characters
 			.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -54,8 +54,8 @@ function hostIsAllowed(currentHost: string, allowedHosts: string[]) {
 }
 
 async function main() {
-	const allowedHosts = (await chrome.storage.sync.get('allowed_hosts'))?.allowed_hosts ?? [];
-	if (!hostIsAllowed(window.location.host, allowedHosts)) {
+	const allowedWebsites = (await chrome.storage.sync.get('allowedWebsites'))?.allowedWebsites ?? [];
+	if (!hostIsAllowed(window.location.host, allowedWebsites)) {
 		return;
 	}
 	// Check the page for sensitive data when the DOM is first loaded (which is

@@ -42,6 +42,9 @@ const observer = new MutationObserver((mutations) => {
 // patterns; wildcards (e.g. *.example.com) are allowed
 function websiteIsAllowed(currentUrl: string, allowedWebsites: string[]) {
 	return allowedWebsites.some((websitePattern) => {
+		if (!websitePattern.trim()) {
+			return false;
+		}
 		const escapedWebsitePattern = websitePattern
 			// Escape special regex characters
 			.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')

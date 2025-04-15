@@ -40,7 +40,7 @@ const observer = new MutationObserver((mutations) => {
 
 // Return true if the given website URL matches one of the allowed website
 // patterns; wildcards (e.g. *.example.com) are allowed
-function websiteIsAllowed(currentUrl: string, allowedWebsites: string[]) {
+function websiteIsAllowed(currentUrl: Location | URL, allowedWebsites: string[]) {
 	return allowedWebsites.some((websitePattern) => {
 		if (!websitePattern.trim()) {
 			return false;
@@ -50,15 +50,15 @@ function websiteIsAllowed(currentUrl: string, allowedWebsites: string[]) {
 			.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 			// Replace wildcards (*) with the proper regex pattern to match any
 			// character except a dot
-			.replace(/\\\*/g, '[^\\.]*');
-		const regex = new RegExp(`\\b${escapedWebsitePattern}\\b`);
-		return regex.test(currentUrl);
+			.replace(/\\\*/g, '[^\\.\\/]*');
+		const regex = new RegExp(`^${escapedWebsitePattern}$`);
+		return regex.test(currentUrl.href) || regex.test(currentUrl.hostname);
 	});
 }
 
 async function main() {
 	const allowedWebsites = (await chrome.storage.sync.get('allowedWebsites'))?.allowedWebsites ?? [];
-	if (!websiteIsAllowed(window.location.href, allowedWebsites)) {
+	if (!websiteIsAllowed(location, allowedWebsites)) {
 		return;
 	}
 	// Check the page for sensitive data when the DOM is first loaded (which is

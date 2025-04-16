@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { EXTENSION_DISPLAY_NAME } from '../config';
 	import RemoveIcon from './RemoveIcon.svelte';
 
 	let allowedWebsites: string[] = $state([]);
@@ -9,9 +10,20 @@
 		});
 	}
 
-	function addWebsite(): void {
-		allowedWebsites.push('');
+	function addWebsite(website: string): void {
+		allowedWebsites.push(website);
 		saveOptions();
+	}
+
+	async function addNewWebsite() {
+		addWebsite('');
+	}
+
+	async function addCurrentWebsite() {
+		const activeTab = (await chrome.tabs.query({ active: true, currentWindow: true }))[0];
+		if (activeTab.url) {
+			addWebsite(new URL(activeTab.url).host || '');
+		}
 	}
 
 	function removeWebsite(index: number): void {
@@ -34,9 +46,10 @@
 	});
 </script>
 
-<h1>Sensitive Data Masker</h1>
+<h1>{EXTENSION_DISPLAY_NAME}</h1>
 
-<button class="allowed-website-add" onclick={addWebsite}>Add website to mask</button>
+<button class="allowed-website-add-new" onclick={addNewWebsite}>Add website to mask</button>
+<button class="allowed-website-add-current" onclick={addCurrentWebsite}>Add current</button>
 
 <ul class="allowed-website-patterns">
 	{#each allowedWebsites as _, index}

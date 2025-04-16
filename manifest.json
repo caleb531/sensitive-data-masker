@@ -6,6 +6,10 @@
 	"icons": {
 		"256": "icons/app-icon.png"
 	},
+	"background": {
+		"service_worker": "service-worker.ts",
+		"type": "module"
+	},
 	"action": {
 		"default_icon": {
 			"128": "icons/app-icon.png"

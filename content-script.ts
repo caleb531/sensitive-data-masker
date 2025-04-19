@@ -1,7 +1,33 @@
-// Regular expressions representing sensitive data values, like currency values,
-// credit card numbers, etc.
-const sensitiveDataPattern =
-	/(\$|€|£|¥)\s*((?:\d+,?)+(?:\.\d{1,2})?(?:K|M|B|T)?)|((?:\d+,?)+(?:\.\d{1,2})(?:K|M|B|T)?)|((?:\d+,?)+(?:\.\d{1,2})?(?:K|M|B|T)?)\s*(%)/gi;
+// A rule representing a pattern to match and a substitution function to apply
+interface ReplacementRule {
+	pattern: RegExp;
+	substitution: (...args: string[]) => string;
+}
+
+// All replacement rules built into the extension; these rules dictate what the
+// extension will mask on a given webpage
+const replacementRules: ReplacementRule[] = [
+	{
+		// Currency value with symbol
+		pattern: /(\$|€|£|¥)\s*((?:\d+,?)+(?:\.\d{1,2})?(?:K|M|B|T)?)/gi,
+		substitution: (_, $1) => `${$1 ?? ''}x.xx`
+	},
+	{
+		// Currency value without symbol
+		pattern: /((?:\d+,?)+(?:\.\d{1,2})(?:K|M|B|T)?)/gi,
+		substitution: () => `x.xx`
+	},
+	{
+		// Percentage value
+		pattern: /((?:\d+,?)+(?:\.\d{1,2})?(?:K|M|B|T)?)\s*(%)/gi,
+		substitution: (_, $1) => `x.xx${$1 ?? ''}`
+	},
+	{
+		// Social security number
+		pattern: /(\d{3})-(\d{2})-(\d{4})/gi,
+		substitution: () => `xxx-xx-xxxx`
+	}
+];
 
 // Recursively walk element and its descendants, and for any leaf node whose
 // textContent matches any of the designated patterns, mask the value
@@ -13,11 +39,17 @@ function maskValuesInNodeTree(node: Node) {
 		node.parentElement?.nodeName !== 'SCRIPT' &&
 		node.parentElement?.nodeName !== 'STYLE'
 	) {
-		if (sensitiveDataPattern.test(node.textContent)) {
-			node.textContent = node.textContent.replace(sensitiveDataPattern, ($0, $1, $2, $3, $4) => {
-				return `${$1 ?? ''}x.xx${$4 ?? ''}`;
-			});
-		}
+		const currentTextContent = node.textContent;
+		replacementRules.some((replacementRule) => {
+			if (replacementRule.pattern.test(currentTextContent)) {
+				node.textContent = currentTextContent.replace(
+					replacementRule.pattern,
+					replacementRule.substitution
+				);
+				return true; // Stop after the first match
+			}
+			return false;
+		});
 	} else if (node.nodeType === Node.ELEMENT_NODE) {
 		// Recursively process elements to find text nodes
 		node.childNodes.forEach((childNode) => {

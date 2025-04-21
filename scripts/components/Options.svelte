@@ -1,17 +1,24 @@
 <script lang="ts">
 	import { EXTENSION_DISPLAY_NAME } from '../config';
+	import type { AllowedWebsite } from '../types';
 	import RemoveIcon from './RemoveIcon.svelte';
+	import Switch from './Switch.svelte';
 
-	let allowedWebsites: string[] = $state([]);
+	const allowedWebsites: AllowedWebsite[] = $state([]);
 
 	function saveOptions(): void {
-		chrome.storage.sync.set({ allowedWebsites: [...allowedWebsites] }, () => {
-			console.log('Saved allowed websiete patterns!');
-		});
+		chrome.storage.sync.set(
+			{
+				allowedWebsites: [...allowedWebsites]
+			},
+			() => {
+				console.log('Saved allowed website patterns!');
+			}
+		);
 	}
 
 	function addWebsite(website: string): void {
-		allowedWebsites.push(website);
+		allowedWebsites.push({ pattern: website, enabled: true });
 		saveOptions();
 	}
 
@@ -27,12 +34,17 @@
 	}
 
 	function removeWebsite(index: number): void {
-		allowedWebsites = allowedWebsites.filter((_, i) => i !== index);
+		allowedWebsites.splice(index, 1);
 		saveOptions();
 	}
 
 	function updateWebsite(index: number, value: string): void {
-		allowedWebsites[index] = value;
+		allowedWebsites[index].pattern = value;
+		saveOptions();
+	}
+
+	function toggleWebsiteEnabled(index: number): void {
+		allowedWebsites[index].enabled = !allowedWebsites[index].enabled;
 		saveOptions();
 	}
 
@@ -40,7 +52,7 @@
 	$effect(() => {
 		chrome.storage.sync.get('allowedWebsites', (result) => {
 			if (result.allowedWebsites) {
-				allowedWebsites = result.allowedWebsites;
+				allowedWebsites.push(...result.allowedWebsites);
 			}
 		});
 	});
@@ -52,12 +64,17 @@
 <button class="allowed-website-add-current" onclick={addCurrentWebsite}>Add current</button>
 
 <ul class="allowed-website-patterns">
-	{#each allowedWebsites as _, index}
+	{#each allowedWebsites as website, index}
 		<li class="allowed-website-pattern">
+			<Switch
+				class="allowed-website-pattern-toggle"
+				checked={website.enabled}
+				onchange={() => toggleWebsiteEnabled(index)}
+			/>
 			<input
 				class="allowed-website-pattern-input"
 				type="text"
-				bind:value={allowedWebsites[index]}
+				bind:value={website.pattern}
 				oninput={(e) => updateWebsite(index, (e.target as HTMLInputElement).value)}
 				placeholder="Enter hostname or URL"
 			/>

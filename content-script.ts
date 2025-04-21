@@ -1,3 +1,5 @@
+import type { AllowedWebsite } from './scripts/types';
+
 // A rule representing a pattern to match and a substitution function to apply
 interface ReplacementRule {
 	pattern: RegExp;
@@ -72,12 +74,15 @@ const observer = new MutationObserver((mutations) => {
 
 // Return true if the given website URL matches one of the allowed website
 // patterns; wildcards (e.g. *.example.com) are allowed
-function websiteIsAllowed(currentUrl: Location | URL, allowedWebsites: string[]) {
-	return allowedWebsites.some((websitePattern) => {
-		if (!websitePattern.trim()) {
+function websiteIsAllowed(currentUrl: Location | URL, allowedWebsites: AllowedWebsite[]) {
+	return allowedWebsites.some((website) => {
+		if (!website.enabled) {
 			return false;
 		}
-		const escapedWebsitePattern = websitePattern
+		if (!website.pattern.trim()) {
+			return false;
+		}
+		const escapedWebsitePattern = website.pattern
 			// Escape special regex characters
 			.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 			// Replace wildcards (*) with the proper regex pattern to match any

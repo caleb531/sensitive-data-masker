@@ -16,6 +16,7 @@
 	align-items: center;
 	margin: 0;
 	padding: 0;
+	gap: 0 5px;
 }
 
 .allowed-website-pattern-remove {
@@ -23,7 +24,6 @@
 	justify-content: center;
 	align-items: center;
 	margin: 0;
-	margin-left: 5px;
 	padding: 0;
 	background: none;
 	color: var(--color-remove-button-icon-color);

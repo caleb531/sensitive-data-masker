@@ -60,8 +60,10 @@
 
 <h1>{EXTENSION_DISPLAY_NAME}</h1>
 
-<button class="allowed-website-add-new" onclick={addNewWebsite}>Add website to mask</button>
-<button class="allowed-website-add-current" onclick={addCurrentWebsite}>Add current</button>
+<article class="allowed-website-controls">
+	<button class="allowed-website-add-new" onclick={addNewWebsite}>Add website to mask</button>
+	<button class="allowed-website-add-current" onclick={addCurrentWebsite}>Add current</button>
+</article>
 
 <ul class="allowed-website-patterns">
 	{#each allowedWebsites as website, index}

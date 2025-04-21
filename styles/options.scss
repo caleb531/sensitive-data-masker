@@ -1,8 +1,8 @@
 @use 'base';
 @use 'fonts';
 
-.allowed-website-add {
-	margin-bottom: 3px;
+.allowed-website-controls {
+	margin-bottom: 5px;
 }
 
 .allowed-website-patterns {
@@ -20,6 +20,10 @@
 }
 
 .allowed-website-pattern-remove {
+	flex-shrink: 0;
+	--button-size: 20px;
+	width: var(--button-size);
+	height: var(--button-size);
 	display: flex;
 	justify-content: center;
 	align-items: center;

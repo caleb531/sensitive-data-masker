@@ -15,14 +15,14 @@
 :root,
 :host {
 	// Semantic colors
-	--color-app-background: var(--color-black);
-	--color-app-text: var(--color-white);
-	--color-app-links: var(--color-yellow);
+	--color-extension-background: var(--color-black);
+	--color-extension-text: var(--color-white);
+	--color-extension-links: var(--color-yellow);
 	--color-input-border: var(--color-white);
 	--color-input-border-focus: var(--color-blue);
 	--color-input-shadow-focus: var(--color-blue);
 	--color-button-background: var(--color-purple);
-	--color-button-text: var(--color-app-text);
+	--color-button-text: var(--color-extension-text);
 	--color-remove-button-background-hover: var(--color-red);
 	--color-remove-button-icon-color: var(--color-white);
 	--color-switch-track-disabled: var(--color-gray);

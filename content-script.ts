@@ -11,23 +11,23 @@ interface ReplacementRule {
 const replacementRules: ReplacementRule[] = [
 	{
 		// Currency value with symbol
-		pattern: /(\$|€|£|¥)\s*((?:\d+,?)+(?:\.\d{1,2})?(?:K|M|B|T)?)/gi,
+		pattern: /(\$|€|£|¥)\s*((\d+,?)+(\.\d{1,2})?(K|M|B|T)?)/gi,
 		substitution: (_, $1) => `${$1 ?? ''}x.xx`
 	},
 	{
 		// Currency value without symbol
-		pattern: /((?:\d+,?)+(?:\.\d{1,2})(?:K|M|B|T)?)/gi,
-		substitution: () => `x.xx`
+		pattern: /((\d+,?)+(\.\d{1,2})(K|M|B|T)?)/gi,
+		substitution: () => 'x.xx'
 	},
 	{
 		// Percentage value
-		pattern: /((?:\d+,?)+(?:\.\d{1,2})?(?:K|M|B|T)?)\s*(%)/gi,
-		substitution: (_, $1) => `x.xx${$1 ?? ''}`
+		pattern: /((\d+,?)+(\.\d{1,2})?(K|M|B|T)?)\s*(%)/gi,
+		substitution: () => 'x.xx%'
 	},
 	{
 		// Social security number
 		pattern: /(\d{3})-(\d{2})-(\d{4})/gi,
-		substitution: () => `xxx-xx-xxxx`
+		substitution: () => 'xxx-xx-xxxx'
 	}
 ];
 

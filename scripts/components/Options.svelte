@@ -43,6 +43,13 @@
 		saveOptions();
 	}
 
+	// Autofocus new input when added
+	function autofocus(node: HTMLElement, condition: boolean) {
+		if (condition) {
+			node.focus();
+		}
+	}
+
 	// Initially loaded websites list from Chrome storage
 	$effect(() => {
 		chrome.storage.sync.get('allowedWebsites', (result) => {
@@ -74,6 +81,7 @@
 				bind:value={website.pattern}
 				oninput={(e) => updateWebsite(index, (e.target as HTMLInputElement).value)}
 				placeholder="Enter hostname or URL"
+				use:autofocus={website.pattern === ''}
 			/>
 			<button
 				class="allowed-website-pattern-remove"

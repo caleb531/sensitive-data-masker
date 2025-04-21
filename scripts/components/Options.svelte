@@ -7,9 +7,12 @@
 	const allowedWebsites: AllowedWebsite[] = $state([]);
 
 	function saveOptions(): void {
-		chrome.storage.sync.set({ allowedWebsites: [...allowedWebsites] }, () => {
-			console.log('Saved allowed website patterns!');
-		});
+		chrome.storage.sync.set(
+			{ allowedWebsites: allowedWebsites.filter((website) => website.pattern?.trim()) },
+			() => {
+				console.log('Saved allowed website patterns!');
+			}
+		);
 	}
 
 	function addWebsite(website: string): void {

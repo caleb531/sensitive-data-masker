@@ -28,6 +28,16 @@ const replacementRules: ReplacementRule[] = [
 		// Social security number
 		pattern: /(\d{3})-(\d{2})-(\d{4})/gi,
 		substitution: () => 'xxx-xx-xxxx'
+	},
+	{
+		// 16-digit credit card number (e.g. Visa, Mastercard, Discover)
+		pattern: /(\d{4})(-|\s+)?(\d{4})(-|\s+)?(\d{4})(-|\s+)?(\d{4})/gi,
+		substitution: () => 'xxxx-xxxx-xxxx-xxxx'
+	},
+	{
+		// 15-digit credit card number (e.g. American Express)
+		pattern: /(\d{4})-(\d{6})-(\d{5})/gi,
+		substitution: () => 'xxxx-xxxxxx-xxxxx'
 	}
 ];
 

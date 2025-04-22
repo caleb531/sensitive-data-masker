@@ -10,11 +10,6 @@ chrome.runtime.onInstalled.addListener((object) => {
 		title: EXTENSION_DISPLAY_NAME,
 		contexts: ['page', 'editable', 'selection']
 	});
-	// Open Options page (to enter API key) when extension is first installed
-	const optionsPageUrl = chrome.runtime.getURL('options.html');
-	if (object.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-		chrome.tabs.create({ url: optionsPageUrl });
-	}
 });
 
 // When the user chooses the extension's context menu item, send a message to

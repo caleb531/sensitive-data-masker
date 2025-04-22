@@ -3,7 +3,55 @@
 _Copyright 2025 Caleb Evans_  
 _Released under the MIT license_
 
-Sensitive Data Masker is a Chrome extension that masks the values of sensitive information like currency values, passwords, and credit card numbers.
+Sensitive Data Masker is a Chrome extension that masks the values of sensitive
+information like currency values, passwords, and credit card numbers. This is
+useful if you want to show someone a webpage without revealing the sensitive
+information on it.
+
+## How to use
+
+1. **Add the extension to Chrome**  
+   After installing the extension, the icon will be added to the Chrome
+   Extensions menu (puzzle piece icon in the toolbar). To make it easier to
+   access, you can pin the icon:
+
+   - Click the Extensions menu (puzzle piece icon) in the Chrome toolbar.
+   - Find "Sensitive Data Masker" in the list and click the pin icon next to it.
+
+2. **Open the Options page**  
+   Click the extension icon in the toolbar (or from the Extensions menu) to open
+   the options page.
+
+3. **Add websites to the allowed list**  
+   On the Options page, you can manage the list of websites where sensitive data
+   masking will be applied:
+
+   - Click **"Add new website"** to add a blank entry. You can then type the
+     hostname or URL of the website you want to allow; wildcards (`*`) are
+     supported (e.g. `*.mywebsite.com`)
+   - Click **"Add current"** to quickly add the website under the active tab.
+
+   You can also add a website to the allowed list by right-clicking the webpage,
+   choosing "Sensitive Data Masker" from the menu, and then clicking "Add
+   Current".
+
+4. **Enable or disable masking for specific websites**  
+   Use the toggle switch next to each website in the list to enable or disable
+   masking for that specific website without removing the entry.
+
+5. **Edit or remove websites**
+
+   - To edit a website, click the input field and update the hostname or URL
+     pattern.
+   - To remove a website, click the X icon next to it.
+
+6. **Changes are autosaved**  
+   Changes are automatically saved as you add, edit, or remove websites.
+
+7. **Disable masking temporarily**  
+   If you want to temporarily disable masking for all websites, you can toggle
+   the extension off from the Chrome toolbar by clicking the extension icon and
+   using the provided controls.
 
 ## Developer Setup
 

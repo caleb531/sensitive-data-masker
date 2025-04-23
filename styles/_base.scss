@@ -22,12 +22,34 @@ h1 {
 	white-space: nowrap;
 }
 
+h2 {
+	font-size: var(--font-size-h2);
+}
+
 a {
 	color: var(--color-extension-links);
 }
 
 p {
 	margin: 0;
+}
+
+ul,
+ol,
+li {
+	margin: 0;
+	padding: 0;
+}
+
+ul,
+ol {
+	list-style-type: none;
+}
+
+li {
+	display: flex;
+	align-items: center;
+	gap: 0 5px;
 }
 
 label {

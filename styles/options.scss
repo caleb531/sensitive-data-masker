@@ -8,20 +8,6 @@
 	margin-bottom: 5px;
 }
 
-.allowed-website-patterns {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-}
-
-.allowed-website-pattern {
-	display: flex;
-	align-items: center;
-	margin: 0;
-	padding: 0;
-	gap: 0 5px;
-}
-
 .allowed-website-pattern-remove {
 	flex-shrink: 0;
 	--button-size: 20px;

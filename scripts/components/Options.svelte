@@ -4,6 +4,26 @@
 	import RemoveIcon from './RemoveIcon.svelte';
 	import Switch from './Switch.svelte';
 
+	// Data types that can be masked
+	const dataTypes = $state([
+		{
+			label: 'Currency values',
+			enabled: true
+		},
+		{
+			label: 'Percentages',
+			enabled: true
+		},
+		{
+			label: 'Social security numbers',
+			enabled: true
+		},
+		{
+			label: 'Credit card numbers',
+			enabled: true
+		}
+	]);
+
 	const allowedWebsites: AllowedWebsite[] = $state([]);
 
 	function saveOptions(): void {
@@ -64,6 +84,23 @@
 </script>
 
 <h1>{EXTENSION_DISPLAY_NAME}</h1>
+
+<h2>Masking Settings</h2>
+
+<ul class="data-types">
+	{#each dataTypes as dataType}
+		<li class="data-type">
+			<Switch
+				class="data-type-toggle"
+				checked={dataType.enabled}
+				onchange={() => (dataType.enabled = !dataType.enabled)}
+			/>
+			<span class="data-type-name">{dataType.label}</span>
+		</li>
+	{/each}
+</ul>
+
+<h2>Allowed Websites</h2>
 
 <article class="allowed-website-controls">
 	<button class="allowed-website-add-new" onclick={addNewWebsite}>Add new website</button>

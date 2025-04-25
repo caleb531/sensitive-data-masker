@@ -2,7 +2,7 @@
 	"name": "Sensitive Data Masker",
 	"version": "0.1.0",
 	"manifest_version": 3,
-	"description": "Masks the values of sensitive values like dollar amounts, passwords, credit card numbers, and other sensitive values",
+	"description": "Masks the values of sensitive values like monetary amounts, credit card numbers, and other sensitive values",
 	"icons": {
 		"256": "icons/extension-icon.png"
 	},

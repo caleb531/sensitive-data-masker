@@ -8,7 +8,7 @@
 	export const dataTypes = [
 		{
 			id: 'currency',
-			label: 'Currency values'
+			label: 'Monetary amounts'
 		},
 		{
 			id: 'percentage',

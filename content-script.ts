@@ -24,7 +24,7 @@ const replacementRules: ReplacementRule[] = [
 	},
 	{
 		// Percentage value
-		pattern: /((\d+,?)+(\.\d{1,2})?(K|M|B|T)?)\s*(%)/gi,
+		pattern: /((\d+,?)+(\.\d+)?(K|M|B|T)?)\s*(%)/gi,
 		substitution: () => 'x.xx%',
 		dataTypeId: 'percentage'
 	},

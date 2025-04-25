@@ -39,7 +39,11 @@
 	}
 
 	function addWebsite(website: string): void {
-		allowedWebsites.push({ pattern: website, enabled: true });
+		allowedWebsites.push({
+			id: crypto.randomUUID(),
+			pattern: website,
+			enabled: true
+		});
 		saveOptions();
 	}
 
@@ -133,7 +137,7 @@
 	</article>
 
 	<ul class="allowed-website-patterns">
-		{#each allowedWebsites as website, index}
+		{#each allowedWebsites as website, index (website.id)}
 			<li class="allowed-website-pattern">
 				<Switch
 					class="allowed-website-pattern-toggle"

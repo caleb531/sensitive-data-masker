@@ -1,4 +1,5 @@
 export interface AllowedWebsite {
+	id: string;
 	pattern: string;
 	enabled: boolean;
 }

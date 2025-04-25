@@ -107,6 +107,8 @@
 
 <h1>{EXTENSION_DISPLAY_NAME}</h1>
 
+<p class="hint">Changes take effect after page reload.</p>
+
 {#if !isLoading}
 	<h2>Masking Settings</h2>
 

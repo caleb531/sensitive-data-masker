@@ -1,6 +1,12 @@
 @use 'base';
 @use 'fonts';
 
+.hint {
+	margin-top: 10px;
+	font-size: var(--font-size-hint);
+	font-style: italic;
+}
+
 .allowed-website-controls {
 	display: flex;
 	justify-content: flex-start;

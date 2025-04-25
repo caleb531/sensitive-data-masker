@@ -1,4 +1,11 @@
 export interface AllowedWebsite {
-	enabled: boolean;
 	pattern: string;
+	enabled: boolean;
+}
+
+export type DataTypeId = 'currency' | 'percentage' | 'socialSecurityNumber' | 'creditCardNumber';
+
+export interface DataType {
+	id: DataTypeId;
+	label: string;
 }

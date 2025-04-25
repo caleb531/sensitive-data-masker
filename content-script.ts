@@ -1,9 +1,10 @@
-import type { AllowedWebsite } from './scripts/types';
+import type { AllowedWebsite, DataTypeId } from './scripts/types';
 
 // A rule representing a pattern to match and a substitution function to apply
 interface ReplacementRule {
 	pattern: RegExp;
 	substitution: (...args: string[]) => string;
+	dataTypeId: DataTypeId;
 }
 
 // All replacement rules built into the extension; these rules dictate what the
@@ -12,38 +13,47 @@ const replacementRules: ReplacementRule[] = [
 	{
 		// Currency value with symbol
 		pattern: /(\$|€|£|¥)\s*((\d+,?)+(\.\d{1,2})?(K|M|B|T)?)/gi,
-		substitution: (_, $1) => `${$1 ?? ''}x.xx`
+		substitution: (_, $1) => `${$1 ?? ''}x.xx`,
+		dataTypeId: 'currency'
 	},
 	{
 		// Currency value without symbol
 		pattern: /((\d+,?)+(\.\d{1,2})(K|M|B|T)?)/gi,
-		substitution: () => 'x.xx'
+		substitution: () => 'x.xx',
+		dataTypeId: 'currency'
 	},
 	{
 		// Percentage value
 		pattern: /((\d+,?)+(\.\d{1,2})?(K|M|B|T)?)\s*(%)/gi,
-		substitution: () => 'x.xx%'
+		substitution: () => 'x.xx%',
+		dataTypeId: 'percentage'
 	},
 	{
 		// Social security number
 		pattern: /(\d{3})-(\d{2})-(\d{4})/gi,
-		substitution: () => 'xxx-xx-xxxx'
+		substitution: () => 'xxx-xx-xxxx',
+		dataTypeId: 'socialSecurityNumber'
 	},
 	{
 		// 16-digit credit card number (e.g. Visa, Mastercard, Discover)
 		pattern: /(\d{4})(-|\s+)?(\d{4})(-|\s+)?(\d{4})(-|\s+)?(\d{4})/gi,
-		substitution: () => 'xxxx-xxxx-xxxx-xxxx'
+		substitution: () => 'xxxx-xxxx-xxxx-xxxx',
+		dataTypeId: 'creditCardNumber'
 	},
 	{
 		// 15-digit credit card number (e.g. American Express)
 		pattern: /(\d{4})-(\d{6})-(\d{5})/gi,
-		substitution: () => 'xxxx-xxxxxx-xxxxx'
+		substitution: () => 'xxxx-xxxxxx-xxxxx',
+		dataTypeId: 'creditCardNumber'
 	}
 ];
 
 // Recursively walk element and its descendants, and for any leaf node whose
 // textContent matches any of the designated patterns, mask the value
-function maskValuesInNodeTree(node: Node) {
+function maskValuesInNodeTree(
+	node: Node,
+	dataTypePreferences: Partial<Record<DataTypeId, boolean>>
+) {
 	if (
 		node.nodeType === Node.TEXT_NODE &&
 		node.textContent &&
@@ -53,7 +63,10 @@ function maskValuesInNodeTree(node: Node) {
 	) {
 		const currentTextContent = node.textContent;
 		replacementRules.some((replacementRule) => {
-			if (replacementRule.pattern.test(currentTextContent)) {
+			if (
+				(dataTypePreferences[replacementRule.dataTypeId] ?? true) &&
+				replacementRule.pattern.test(currentTextContent)
+			) {
 				node.textContent = currentTextContent.replace(
 					replacementRule.pattern,
 					replacementRule.substitution
@@ -65,22 +78,10 @@ function maskValuesInNodeTree(node: Node) {
 	} else if (node.nodeType === Node.ELEMENT_NODE) {
 		// Recursively process elements to find text nodes
 		node.childNodes.forEach((childNode) => {
-			maskValuesInNodeTree(childNode);
+			maskValuesInNodeTree(childNode, dataTypePreferences);
 		});
 	}
 }
-
-const observer = new MutationObserver((mutations) => {
-	mutations.forEach((mutation) => {
-		if (mutation.type === 'childList') {
-			mutation.addedNodes.forEach((node) => {
-				if (node.nodeType === Node.ELEMENT_NODE) {
-					maskValuesInNodeTree(node);
-				}
-			});
-		}
-	});
-});
 
 // Return true if the given website URL matches one of the allowed website
 // patterns; wildcards (e.g. *.example.com) are allowed
@@ -105,6 +106,8 @@ function websiteIsAllowed(currentUrl: Location | URL, allowedWebsites: AllowedWe
 
 async function main() {
 	const allowedWebsites = (await chrome.storage.sync.get('allowedWebsites'))?.allowedWebsites ?? [];
+	const dataTypePreferences =
+		(await chrome.storage.sync.get('dataTypePreferences'))?.dataTypePreferences ?? {};
 	if (!websiteIsAllowed(location, allowedWebsites)) {
 		return;
 	}
@@ -113,8 +116,19 @@ async function main() {
 	// "document_idle", which guarantees the DOM is complete by the time the
 	// content script runs; for more details, see the table in
 	// <https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts#run_time>)
-	maskValuesInNodeTree(document.body);
+	maskValuesInNodeTree(document.body, dataTypePreferences);
 	// Recheck page for sensitive data when DOM changes
+	const observer = new MutationObserver((mutations) => {
+		mutations.forEach((mutation) => {
+			if (mutation.type === 'childList') {
+				mutation.addedNodes.forEach((node) => {
+					if (node.nodeType === Node.ELEMENT_NODE) {
+						maskValuesInNodeTree(node, dataTypePreferences);
+					}
+				});
+			}
+		});
+	});
 	observer.observe(document.body, {
 		childList: true,
 		subtree: true,

@@ -18,7 +18,7 @@ const replacementRules: ReplacementRule[] = [
 	},
 	{
 		// Currency value without symbol
-		pattern: /((\d+,?)+(\.\d{2})(K|M|B|T)?)/gi,
+		pattern: /(?<!\.)((\d+,?)+(\.\d{2})(K|M|B|T)?)(?!\.)/gi,
 		substitution: () => 'x.xx',
 		dataTypeId: 'currency'
 	},

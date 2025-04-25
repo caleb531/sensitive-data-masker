@@ -126,6 +126,8 @@ async function main() {
 						maskValuesInNodeTree(node, dataTypePreferences);
 					}
 				});
+			} else if (mutation.type === 'characterData') {
+				maskValuesInNodeTree(mutation.target, dataTypePreferences);
 			}
 		});
 	});

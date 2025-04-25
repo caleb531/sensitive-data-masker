@@ -46,12 +46,18 @@ the sensitive information on it.
    - To remove a website, click the X icon next to it.
 
 6. **Changes are autosaved**  
-   Changes are automatically saved as you add, edit, or remove websites.
+   Changes are automatically saved as you add, edit, or remove websites. Just remember to reload the current page to see changes there.
 
 7. **Disable masking temporarily**  
    If you want to temporarily disable masking for all websites, you can toggle
    the extension off from the Chrome toolbar by clicking the extension icon and
    using the provided controls.
+
+8. **Toggle visibility of certain data types**: At the top of the extension
+   popup, you will see a list of the various data types that can be
+   automatically masked by the extension. Toggling the switch for any data type
+   will change whether it is currently masked (enabled means values will be
+   masked, whereas disabled means those values will be visible).
 
 ## Developer Setup
 

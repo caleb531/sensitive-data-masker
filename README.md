@@ -4,9 +4,9 @@ _Copyright 2025 Caleb Evans_
 _Released under the MIT license_
 
 Sensitive Data Masker is a Chrome extension that masks the values of sensitive
-information like monetary amounts, passwords, and credit card numbers. This is
-useful if you want to show someone a webpage without revealing the sensitive
-information on it.
+information like monetary amounts, social security numbers, and other sensitive
+values. This is useful if you want to show someone a webpage without revealing
+the sensitive information on it.
 
 ## How to use
 

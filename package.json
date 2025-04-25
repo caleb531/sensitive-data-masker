@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"private": true,
 	"type": "module",
-	"description": "A Chrome extension to mask sensitive information like monetary amounts, passwords, and credit card numbers.",
+	"description": "A Chrome extension that masks sensitive information like monetary amounts, social security numbers, and other sensitive values.",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",

@@ -12,37 +12,37 @@ interface ReplacementRule {
 const replacementRules: ReplacementRule[] = [
 	{
 		// Currency value with symbol
-		pattern: /(\$|€|£|¥)\s*((\d+,?)+(\.\d{1,2})?(K|M|B|T)?)/gi,
+		pattern: /\b(\$|€|£|¥)\s*((\d+,?)+(\.\d{1,2})?(K|M|B|T)?)\b/gi,
 		substitution: (_, $1) => `${$1 ?? ''}x.xx`,
 		dataTypeId: 'currency'
 	},
 	{
 		// Currency value without symbol
-		pattern: /(?<!\.)((\d+,?)+(\.\d{2})(K|M|B|T)?)(?!\.)/gi,
+		pattern: /\b(?<!\.)((\d+,?)+(\.\d{2})(K|M|B|T)?)(?!\.)\b/gi,
 		substitution: () => 'x.xx',
 		dataTypeId: 'currency'
 	},
 	{
 		// Percentage value
-		pattern: /((\d+,?)+(\.\d+)?(K|M|B|T)?)\s*(%)/gi,
+		pattern: /\b((\d+,?)+(\.\d+)?(K|M|B|T)?)\s*(%)\b/gi,
 		substitution: () => 'x.xx%',
 		dataTypeId: 'percentage'
 	},
 	{
 		// Social security number
-		pattern: /(\d{3})-(\d{2})-(\d{4})/gi,
+		pattern: /\b(\d{3})-(\d{2})-(\d{4})\b/gi,
 		substitution: () => 'xxx-xx-xxxx',
 		dataTypeId: 'socialSecurityNumber'
 	},
 	{
 		// 16-digit credit card number (e.g. Visa, Mastercard, Discover)
-		pattern: /(\d{4})(-|\s+)?(\d{4})(-|\s+)?(\d{4})(-|\s+)?(\d{4})/gi,
+		pattern: /\b(\d{4})(-|\s+)?(\d{4})(-|\s+)?(\d{4})(-|\s+)?(\d{4})\b/gi,
 		substitution: () => 'xxxx-xxxx-xxxx-xxxx',
 		dataTypeId: 'creditCardNumber'
 	},
 	{
 		// 15-digit credit card number (e.g. American Express)
-		pattern: /(\d{4})-(\d{6})-(\d{5})/gi,
+		pattern: /\b(\d{4})-(\d{6})-(\d{5})\b/gi,
 		substitution: () => 'xxxx-xxxxxx-xxxxx',
 		dataTypeId: 'creditCardNumber'
 	}

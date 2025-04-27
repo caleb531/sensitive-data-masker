@@ -12,7 +12,7 @@ interface ReplacementRule {
 const replacementRules: ReplacementRule[] = [
 	{
 		// Monetary amount
-		pattern: /\b(?<!\.)(\d+,?)+((\.\d{2})|(\.\d{1,2}(K|M|B|T)?))(?!\.)\b/gi,
+		pattern: /\b(?<!\.)(\d+,?)+((\.\d{2,})|(\.\d{1,2}(K|M|B|T)?))(?!\.)\b/gi,
 		substitution: () => 'x.xx',
 		dataTypeId: 'currency'
 	},

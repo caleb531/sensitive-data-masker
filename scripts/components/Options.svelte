@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { EXTENSION_DISPLAY_NAME } from '../config';
 	import type { AllowedWebsite, DataType, DataTypeId } from '../types';
+	import ReloadPrompt from './ReloadPrompt.svelte';
 	import RemoveIcon from './RemoveIcon.svelte';
 	import Switch from './Switch.svelte';
 
@@ -29,10 +30,14 @@
 
 	const allowedWebsites: AllowedWebsite[] = $state([]);
 
+	// Control when the reload banner prompt is visible
+	let reloadPromptVisible = $state(false);
+
 	function saveOptions(): void {
 		chrome.storage.sync.set(
 			{ allowedWebsites: allowedWebsites.filter((website) => website.pattern?.trim()) },
 			() => {
+				reloadPromptVisible = true;
 				console.log('Saved allowed website patterns!');
 			}
 		);
@@ -82,9 +87,21 @@
 				}
 			},
 			() => {
+				reloadPromptVisible = true;
 				console.log('Saved data types!');
 			}
 		);
+	}
+
+	// Reload the page when the reload prompt is clicked
+	async function handleReloadPromptClicked() {
+		reloadPromptVisible = false;
+		const activeTab = (await chrome.tabs.query({ active: true, currentWindow: true }))[0];
+		if (!activeTab?.id) {
+			return;
+		}
+		chrome.tabs.sendMessage(activeTab.id, { type: 'reloadPage' });
+		console.log('reload page');
 	}
 
 	// Autofocus new input when added
@@ -109,9 +126,9 @@
 	});
 </script>
 
-<h1>{EXTENSION_DISPLAY_NAME}</h1>
+<ReloadPrompt visible={reloadPromptVisible} onclick={handleReloadPromptClicked} />
 
-<p class="hint">Changes take effect after page reload.</p>
+<h1>{EXTENSION_DISPLAY_NAME}</h1>
 
 {#if !isLoading}
 	<h2>Masking Settings</h2>

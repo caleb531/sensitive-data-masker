@@ -130,5 +130,11 @@ async function main() {
 		subtree: true,
 		characterData: true
 	});
+	// Reload the page when instructed by the Options popup
+	chrome.runtime.onMessage.addListener((message) => {
+		if (message.type === 'reloadPage') {
+			window.location.reload();
+		}
+	});
 }
 main();

@@ -11,7 +11,13 @@ interface ReplacementRule {
 // extension will mask on a given webpage
 const replacementRules: ReplacementRule[] = [
 	{
-		// Monetary amount
+		// Monentary amount with currency symbol
+		pattern: /(\$|€|£|¥|₹|₩|₽|₺|₪)(\d+,?)+((\.\d{2,})|(\.\d{1,2}(K|M|B|T)?))?(?!\.)\b/gi,
+		substitution: ($0, $1) => `${$1}x.xx`,
+		dataTypeId: 'currency'
+	},
+	{
+		// Monetary amount without currency symbol
 		pattern: /\b(?<!\.)(\d+,?)+((\.\d{2,})|(\.\d{1,2}(K|M|B|T)?))(?!\.)\b/gi,
 		substitution: () => 'x.xx',
 		dataTypeId: 'currency'

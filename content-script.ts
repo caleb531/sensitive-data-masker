@@ -71,7 +71,8 @@ function maskValuesInNodeTree(
 					replacementRule.pattern,
 					replacementRule.substitution
 				);
-				return true; // Stop after the first match
+				// Fall through to returning false because the same node may contain
+				// multiple data types that require replacement
 			}
 			return false;
 		});

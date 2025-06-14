@@ -59,6 +59,10 @@ the sensitive information on it.
    will change whether it is currently masked (enabled means values will be
    masked, whereas disabled means those values will be visible).
 
+<img src="screenshot-page.png" alt="Sensitive Data Masker Example Page" style="width: 480px; max-width: 100%;">
+
+<img src="screenshot-options.png" alt="Sensitive Data Masker Options" style="width: 480px; max-width: 100%;">
+
 ## Developer Setup
 
 ### Build project

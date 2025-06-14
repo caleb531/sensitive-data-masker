@@ -61,9 +61,8 @@ function maskValuesInNodeTree(
 		node.parentElement?.nodeName !== 'SCRIPT' &&
 		node.parentElement?.nodeName !== 'STYLE'
 	) {
-		replacementRules.forEach((replacementRule) => {
+		for (const replacementRule of replacementRules) {
 			if (
-				node.textContent &&
 				(dataTypePreferences[replacementRule.dataTypeId] ?? true) &&
 				replacementRule.pattern.test(node.textContent)
 			) {
@@ -72,12 +71,12 @@ function maskValuesInNodeTree(
 					replacementRule.substitution
 				);
 			}
-		});
+		}
 	} else if (node.nodeType === Node.ELEMENT_NODE) {
 		// Recursively process elements to find text nodes
-		node.childNodes.forEach((childNode) => {
+		for (const childNode of node.childNodes) {
 			maskValuesInNodeTree(childNode, dataTypePreferences);
-		});
+		}
 	}
 }
 
@@ -117,17 +116,17 @@ async function main() {
 	maskValuesInNodeTree(document.body, dataTypePreferences);
 	// Recheck page for sensitive data when DOM changes
 	const observer = new MutationObserver((mutations) => {
-		mutations.forEach((mutation) => {
+		for (const mutation of mutations) {
 			if (mutation.type === 'childList') {
-				mutation.addedNodes.forEach((node) => {
+				for (const node of mutation.addedNodes) {
 					if (node.nodeType === Node.ELEMENT_NODE) {
 						maskValuesInNodeTree(node, dataTypePreferences);
 					}
-				});
+				}
 			} else if (mutation.type === 'characterData') {
 				maskValuesInNodeTree(mutation.target, dataTypePreferences);
 			}
-		});
+		}
 	});
 	observer.observe(document.body, {
 		childList: true,

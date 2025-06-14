@@ -61,17 +61,16 @@ function maskValuesInNodeTree(
 		node.parentElement?.nodeName !== 'SCRIPT' &&
 		node.parentElement?.nodeName !== 'STYLE'
 	) {
-		let currentTextContent = node.textContent;
 		replacementRules.forEach((replacementRule) => {
 			if (
+				node.textContent &&
 				(dataTypePreferences[replacementRule.dataTypeId] ?? true) &&
-				replacementRule.pattern.test(currentTextContent)
+				replacementRule.pattern.test(node.textContent)
 			) {
-				currentTextContent = currentTextContent.replace(
+				node.textContent = node.textContent.replace(
 					replacementRule.pattern,
 					replacementRule.substitution
 				);
-				node.textContent = currentTextContent;
 			}
 		});
 	} else if (node.nodeType === Node.ELEMENT_NODE) {

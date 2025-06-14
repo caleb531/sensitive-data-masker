@@ -101,7 +101,7 @@ function websiteIsAllowed(currentUrl: Location | URL, allowedWebsites: AllowedWe
 			// character except a dot
 			.replace(/\\\*/g, '[^\\.\\/]*');
 		const regex = new RegExp(`^${escapedWebsitePattern}$`);
-		return regex.test(currentUrl.href) || regex.test(currentUrl.hostname);
+		return regex.test(currentUrl.href) || regex.test(currentUrl.host);
 	});
 }
 

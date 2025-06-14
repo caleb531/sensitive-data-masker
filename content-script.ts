@@ -62,7 +62,7 @@ function maskValuesInNodeTree(
 		node.parentElement?.nodeName !== 'STYLE'
 	) {
 		const currentTextContent = node.textContent;
-		replacementRules.some((replacementRule) => {
+		replacementRules.forEach((replacementRule) => {
 			if (
 				(dataTypePreferences[replacementRule.dataTypeId] ?? true) &&
 				replacementRule.pattern.test(currentTextContent)
@@ -71,10 +71,7 @@ function maskValuesInNodeTree(
 					replacementRule.pattern,
 					replacementRule.substitution
 				);
-				// Fall through to returning false because the same node may contain
-				// multiple data types that require replacement
 			}
-			return false;
 		});
 	} else if (node.nodeType === Node.ELEMENT_NODE) {
 		// Recursively process elements to find text nodes

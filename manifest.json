@@ -1,6 +1,6 @@
 {
 	"name": "Sensitive Data Masker",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"manifest_version": 3,
 	"description": "Masks sensitive data (like monetary amounts) on any website for demo purposes.",
 	"icons": {

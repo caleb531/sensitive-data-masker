@@ -8,6 +8,10 @@ information like monetary amounts, social security numbers, and other sensitive
 values. This is useful if you want to show someone a webpage without revealing
 the sensitive information on it.
 
+[Install from the Chrome Web Store][web-store]
+
+[web-store]: https://chromewebstore.google.com/detail/jknjckjoianbkgfpjifjebfjgnfdpmgb
+
 ## How to use
 
 1. **Add the extension to Chrome**  

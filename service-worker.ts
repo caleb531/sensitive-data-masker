@@ -3,7 +3,7 @@ import { EXTENSION_DISPLAY_NAME } from './scripts/config';
 // The ID of the context menu item used to trigger the extension
 const CONTEXT_MENU_ITEM_ID = 'sensitive-data-masker';
 
-chrome.runtime.onInstalled.addListener((object) => {
+chrome.runtime.onInstalled.addListener(() => {
 	// Add context menu item for selecting/populating form via right-click
 	chrome.contextMenus.create({
 		id: CONTEXT_MENU_ITEM_ID,

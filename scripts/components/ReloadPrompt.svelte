@@ -12,6 +12,12 @@
 	}
 </script>
 
-<button class="reload-prompt" class:visible onclick={handleClick} onkeydown={handleClick} inert={!visible}>
+<button
+	class="reload-prompt"
+	class:visible
+	onclick={handleClick}
+	onkeydown={handleClick}
+	inert={!visible}
+>
 	Reload page to see changes</button
 >

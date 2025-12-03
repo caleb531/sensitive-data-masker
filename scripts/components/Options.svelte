@@ -134,7 +134,7 @@
 	<h2>Masking Settings</h2>
 
 	<ul class="data-types">
-		{#each dataTypes as dataType}
+		{#each dataTypes as dataType (dataType.id)}
 			<li class="data-type">
 				<Switch
 					class="data-type-toggle"

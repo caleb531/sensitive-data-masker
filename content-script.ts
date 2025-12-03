@@ -18,7 +18,7 @@ const replacementRules: ReplacementRule[] = [
 	},
 	{
 		// Monetary amount without currency symbol
-		pattern: /\b(?<!\.)(\d+,?)+((\.\d{2,})|(\.\d{1,2}(K|M|B|T)?))(?!\s*[\.\%])\b/gi,
+		pattern: /\b(?<!\.)(\d+,?)+((\.\d{2,})|(\.\d{1,2}(K|M|B|T)?))(?!\s*[.%])\b/gi,
 		substitution: () => 'x.xx',
 		dataTypeId: 'currency'
 	},

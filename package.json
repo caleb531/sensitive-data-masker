@@ -1,6 +1,6 @@
 {
 	"name": "sensitive-data-masker",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"private": true,
 	"type": "module",
 	"description": "A Chrome extension that masks sensitive information like monetary amounts, social security numbers, and other sensitive values.",
@@ -44,7 +44,8 @@
 	},
 	"dependencies": {
 		"es-toolkit": "^1.39.3",
-		"openai": "^5.3.0"
+		"openai": "^5.3.0",
+		"tldts": "^7.5.4"
 	},
 	"devEngines": {
 		"packageManager": {

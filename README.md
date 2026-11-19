@@ -34,6 +34,9 @@ the sensitive information on it.
      hostname or URL of the website you want to allow; wildcards (`*`) are
      supported (e.g. `*.mywebsite.com`)
    - Click **"Add current"** to quickly add the website under the active tab.
+   - Click **"Allow site access"** and approve the Chrome prompt. The row shows
+     the domain that Chrome will grant access to. Masking follows the saved rule,
+     including any URL path or wildcard you entered.
 
    You can also add a website to the allowed list by right-clicking the webpage,
    choosing "Sensitive Data Masker" from the menu, and then clicking "Add
@@ -41,16 +44,20 @@ the sensitive information on it.
 
 4. **Enable or disable masking for specific websites**  
    Use the toggle switch next to each website in the list to enable or disable
-   masking for that specific website without removing the entry.
+   masking for that website while keeping its approval. Use **"Revoke access"**
+   to withdraw Chrome's permission and keep the rule. Revoking a shared grant
+   affects every rule it covers.
 
 5. **Edit or remove websites**
 
    - To edit a website, click the input field and update the hostname or URL
      pattern.
-   - To remove a website, click the X icon next to it.
+   - To remove a website, click the X icon next to it. The extension releases
+     its site permission if no other saved rule uses it.
 
 6. **Changes are autosaved**  
-   Changes are automatically saved as you add, edit, or remove websites. Just remember to reload the current page to see changes there.
+   Website edits are saved when you leave the field or press Enter. Reload an
+   already-open page to apply changes there.
 
 7. **Disable masking temporarily**  
    If you want to temporarily disable masking for all websites, you can toggle
@@ -66,6 +73,13 @@ the sensitive information on it.
 <img src="screenshot-page.png" alt="Sensitive Data Masker Example Page" style="width: 480px; max-width: 100%;">
 
 <img src="screenshot-options.png" alt="Sensitive Data Masker Options" style="width: 480px; max-width: 100%;">
+
+## Upgrading to 2.0
+
+Your saved rules and masking settings carry over from 1.x. Approve site access
+for your saved rules to resume automatic masking. Chrome keeps approvals in the
+current browser profile, so another profile needs its own approval even if your
+rules sync there. Version 2.0 supports site access for HTTP and HTTPS pages.
 
 ## Developer Setup
 

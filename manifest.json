@@ -1,6 +1,6 @@
 {
 	"name": "Sensitive Data Masker",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"manifest_version": 3,
 	"description": "Masks sensitive data (like monetary amounts) on any website for demo purposes.",
 	"icons": {
@@ -18,11 +18,6 @@
 		"default_popup": "options.html"
 	},
 	"options_page": "options.html",
-	"permissions": ["contextMenus", "storage", "activeTab"],
-	"content_scripts": [
-		{
-			"matches": ["<all_urls>"],
-			"js": ["content-script.ts"]
-		}
-	]
+	"permissions": ["contextMenus", "storage", "activeTab", "scripting"],
+	"optional_host_permissions": ["*://*/*"]
 }

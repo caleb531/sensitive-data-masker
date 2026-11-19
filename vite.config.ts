@@ -10,5 +10,6 @@ export default defineConfig({
 			}
 		}
 	},
-	plugins: [svelte(), webExtension()]
+	// Build the masking script so the service worker can register it at runtime
+	plugins: [svelte(), webExtension({ additionalInputs: ['content-script.ts'] })]
 });

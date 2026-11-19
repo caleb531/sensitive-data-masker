@@ -8,6 +8,30 @@
 	margin-bottom: 5px;
 }
 
+// Keep the permission controls below the website field in the narrow popup
+.allowed-website-pattern {
+	display: block;
+	margin-bottom: 8px;
+}
+
+// Keep the rule toggle and delete button next to the website field
+.allowed-website-fields {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+// Allow long domain patterns and error messages to wrap in the popup
+.website-access-status {
+	margin: 4px 0;
+	font-size: var(--font-size-xs);
+	overflow-wrap: anywhere;
+
+	button {
+		margin-top: 4px;
+	}
+}
+
 .allowed-website-pattern-remove {
 	flex-shrink: 0;
 	--button-size: 20px;

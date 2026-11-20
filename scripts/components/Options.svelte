@@ -332,8 +332,10 @@
 								onclick={() => {
 									if (sharedRules.length) confirmRevokeId = website.id;
 									else void revokeWebsiteAccess(grants);
-								}}>Revoke access</button
+								}}
 							>
+								Revoke access
+							</button>
 						{/if}
 					</div>
 				{:else if access}
@@ -341,8 +343,10 @@
 						<p>Access needed for {access.request}</p>
 						<button
 							disabled={changingAccess || savingWebsites[website.id]}
-							onclick={() => allowWebsiteAccess(access.request)}>Allow site access</button
+							onclick={() => allowWebsiteAccess(access.request)}
 						>
+							Allow site access
+						</button>
 					</div>
 				{:else if website.pattern}
 					<p class="website-access-status">Enter an HTTP or HTTPS website with a specific host.</p>

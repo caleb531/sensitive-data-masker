@@ -19,5 +19,5 @@
 	onkeydown={handleClick}
 	inert={!visible}
 >
-	Reload page to see changes</button
->
+	Reload page to see changes
+</button>

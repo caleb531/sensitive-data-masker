@@ -5,6 +5,7 @@
 		AllowedWebsite,
 		DataType,
 		DataTypeId,
+		SyncSettings,
 		WebsiteChange,
 		WebsiteRequest,
 		WebsiteResponse
@@ -170,7 +171,7 @@
 
 	function toggleDataType(dataType: DataType) {
 		dataTypePreferences[dataType.id] = !dataTypePreferences[dataType.id];
-		chrome.storage.sync.set(
+		chrome.storage.sync.set<SyncSettings>(
 			{
 				get dataTypePreferences() {
 					return dataTypePreferences;
@@ -213,7 +214,8 @@
 			area: string
 		) {
 			if (area !== 'sync' || !changes.allowedWebsites) return;
-			allowedWebsites = changes.allowedWebsites.newValue ?? [];
+			// Chrome's change event leaves the value untyped for this storage key
+			allowedWebsites = (changes.allowedWebsites.newValue as SyncSettings['allowedWebsites']) ?? [];
 			// Drop the draft once its saved row appears in the list
 			for (let index = draftWebsites.length - 1; index >= 0; index--) {
 				if (allowedWebsites.some(({ id }) => id === draftWebsites[index].id)) {
@@ -227,7 +229,7 @@
 		chrome.permissions.onRemoved.addListener(refreshOrigins);
 		window.addEventListener('focus', refreshOrigins);
 		void Promise.all([
-			chrome.storage.sync.get(['allowedWebsites', 'dataTypePreferences']),
+			chrome.storage.sync.get<SyncSettings>(['allowedWebsites', 'dataTypePreferences']),
 			refreshOrigins()
 		])
 			.then(([result]) => {

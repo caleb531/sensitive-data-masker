@@ -2,6 +2,7 @@ import { EXTENSION_DISPLAY_NAME } from './scripts/config';
 import { getWebsiteAccess, getWebsiteGrants, intersectGrant } from './scripts/site-access';
 import type {
 	AllowedWebsite,
+	SyncSettings,
 	WebsiteChange,
 	WebsiteRequest,
 	WebsiteResponse
@@ -42,7 +43,7 @@ function queueWebsiteTask(task: () => Promise<void>): Promise<void> {
 
 // Return the latest masking rules saved by this extension
 async function readWebsites(): Promise<AllowedWebsite[]> {
-	return (await chrome.storage.sync.get('allowedWebsites')).allowedWebsites ?? [];
+	return (await chrome.storage.sync.get<SyncSettings>('allowedWebsites')).allowedWebsites ?? [];
 }
 
 // Register the masking script where a browser grant and an enabled rule overlap
@@ -94,7 +95,7 @@ async function changeWebsite(change: WebsiteChange): Promise<void> {
 	// The saved rules before the edit
 	const websites = await readWebsites();
 	if (change.action === 'add') {
-		await chrome.storage.sync.set({ allowedWebsites: [...websites, change.website] });
+		await chrome.storage.sync.set<SyncSettings>({ allowedWebsites: [...websites, change.website] });
 		return;
 	}
 
@@ -108,7 +109,7 @@ async function changeWebsite(change: WebsiteChange): Promise<void> {
 			: websites.map((website) =>
 					website.id === change.id ? { ...website, ...change.changes } : website
 				);
-	await chrome.storage.sync.set({ allowedWebsites: updated });
+	await chrome.storage.sync.set<SyncSettings>({ allowedWebsites: updated });
 
 	if (change.action === 'update' && change.changes.pattern === undefined) return;
 	// The latest rules and grants in case Chrome Sync updated the list during the edit

@@ -1,4 +1,4 @@
-import type { AllowedWebsite, DataTypeId } from './scripts/types';
+import type { AllowedWebsite, DataTypeId, SyncSettings } from './scripts/types';
 
 // A rule representing a pattern to match and a substitution function to apply
 interface ReplacementRule {
@@ -102,9 +102,12 @@ function websiteIsAllowed(currentUrl: Location | URL, allowedWebsites: AllowedWe
 }
 
 async function main() {
-	const allowedWebsites = (await chrome.storage.sync.get('allowedWebsites'))?.allowedWebsites ?? [];
+	// The saved rules that determine whether to mask this page
+	const allowedWebsites =
+		(await chrome.storage.sync.get<SyncSettings>('allowedWebsites')).allowedWebsites ?? [];
+	// The saved overrides for the default masking rules
 	const dataTypePreferences =
-		(await chrome.storage.sync.get('dataTypePreferences'))?.dataTypePreferences ?? {};
+		(await chrome.storage.sync.get<SyncSettings>('dataTypePreferences')).dataTypePreferences ?? {};
 	if (!websiteIsAllowed(location, allowedWebsites)) {
 		return;
 	}

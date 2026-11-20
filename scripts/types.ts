@@ -21,6 +21,14 @@ export type WebsiteResponse = { ok: true } | { ok: false; error: string };
 
 export type DataTypeId = 'currency' | 'percentage' | 'socialSecurityNumber' | 'creditCardNumber';
 
+// The settings this extension reads and writes in Chrome Sync
+export interface SyncSettings {
+	// The saved website rules, if the user has saved any
+	allowedWebsites?: AllowedWebsite[];
+	// The user's overrides for which data types to mask
+	dataTypePreferences?: Partial<Record<DataTypeId, boolean>>;
+}
+
 export interface DataType {
 	id: DataTypeId;
 	label: string;
